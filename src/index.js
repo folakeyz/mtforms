@@ -1,6 +1,5 @@
-import React from 'react'
-import styles from './styles.module.css'
-
-export const ExampleComponent = ({ text }) => {
-  return <div className={styles.test}>Example Component: {text}</div>
-}
+export { default as Input } from './Forms/Input'
+export { default as Select } from './Forms/Select'
+export { default as Textarea } from './Forms/Textarea'
+export { default as Button } from './Forms/Button'
+export { default as FormGroup } from './Forms/FormGroup'

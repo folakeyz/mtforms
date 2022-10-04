@@ -2,7 +2,6 @@
   "name": "mtforms",
   "version": "1.0.0",
   "description": "form components for mtn sharepoint ",
-  "author": "folakeyz",
   "license": "MIT",
   "repository": "folakeyz/mtforms",
   "main": "dist/index.js",
@@ -49,5 +48,10 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "author": {
+    "name": "Gbenga Fagbemi",
+    "email": "gbengaobafemi1@gmail.com"
+  },
+  "homepage": "https://github.com/folakeyz/mtforms.git"
 }
