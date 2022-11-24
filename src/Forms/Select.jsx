@@ -18,10 +18,10 @@ const Select = ({
   size,
   labelClassName,
   filter,
-  filterValue
+  filterValue,
+  title
 }) => {
   const onChangeHandler = (event) => {
-    console.log(event.target.value)
     const { name, value } = event.target
     onChange && onChange(name, value)
   }
@@ -57,7 +57,7 @@ const Select = ({
         onChange={onChangeHandler}
         onBlur={onValidationChange}
       >
-        <option value=''>{label}</option>
+        <option value=''>{label || title}</option>
         {data &&
           data.map((item, i) =>
             filter ? (
@@ -89,7 +89,8 @@ Select.defaultProps = {
   labelClassName: 'labelBlack',
   filter: '',
   filterValue: '',
-  value: ''
+  value: '',
+  title: ''
 }
 
 Select.propTypes = {
@@ -107,7 +108,8 @@ Select.propTypes = {
   validationHandler: PropTypes.func,
   value: PropTypes.any.isRequired,
   size: PropTypes.string,
-  labelClassName: PropTypes.string
+  labelClassName: PropTypes.string,
+  title: PropTypes.string
 }
 
 export default Select

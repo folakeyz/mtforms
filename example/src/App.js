@@ -1,11 +1,22 @@
 import React, { useState } from 'react'
-import { Input, Select, Textarea, FormGroup, Button } from 'mtforms'
+import {
+  Input,
+  Select,
+  Textarea,
+  FormGroup,
+  Button,
+  DateInput,
+  Radio,
+  ImageUpload,
+  AutoComplete
+} from 'mtforms'
 import 'mtforms/dist/index.css'
 const App = () => {
   const data = [
     { item: 'test', value: 'test1' },
     { item: 'test2', value: 'test2' },
-    { item: 'test3', value: 'test23' }
+    { item: 'test3', value: 'test23' },
+    { item: 'Moses', value: 'David' }
   ]
   const [formData, setFormData] = useState({})
   const [errors, setErrors] = useState({})
@@ -21,6 +32,10 @@ const App = () => {
 
   const validationHandler = (name, error) => {
     setErrors({ ...errors, [name]: error })
+  }
+
+  const handleChanges = (name, filterData) => {
+    console.log(name, filterData)
   }
   return (
     <FormGroup
@@ -39,7 +54,24 @@ const App = () => {
         validationHandler={validationHandler}
         error={errors.firstname}
       />
-
+      <DateInput
+        label='Date'
+        name='date'
+        onChange={handleChange}
+        value={formData['date']}
+        className='pBorder'
+        required={true}
+        validationHandler={validationHandler}
+        error={errors.date}
+        placeholder='Date'
+      />
+      <Radio
+        label='Marital Status'
+        name='maritalStatus'
+        value={formData['maritalStatus']}
+        onChange={handleChange}
+        data={data}
+      />
       <Select
         className='blackBorder'
         data={data}
@@ -56,14 +88,36 @@ const App = () => {
       <Textarea
         label='Address'
         name='address'
-        onChange={handleChange}
+        onChange={handleChanges}
         value={formData['address']}
         className='blackBorder'
         required={true}
         validationHandler={validationHandler}
         error={errors.address}
       />
-      <Button type='submit' title='New' />
+      <ImageUpload
+        name='photo'
+        label='Passport Photo'
+        value=''
+        onChange={handleChange}
+        loading={false}
+        size='medium'
+        bgColor='btnBlue'
+      />
+      <AutoComplete
+        data={data}
+        label='Test'
+        name='tname'
+        onChange={handleChanges}
+        value={formData['tname']}
+        className='pBorder'
+        required={true}
+        validationHandler={validationHandler}
+        error={errors.tname}
+        select='item'
+        // selectValue='value'
+      />
+      <Button type='submit' title='New' bgColor='btnYellow' />
     </FormGroup>
   )
 }

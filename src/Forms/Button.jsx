@@ -18,9 +18,9 @@ const Button = ({
       <button
         type={type}
         onClick={onClick}
-        className={className}
+        className={`${styles[bgColor]} ${className}`}
         disabled={disabled || loading}
-        style={{ background: bgColor, ...style }}
+        style={style}
       >
         {title}
         {loading && <span className={styles.loading}></span>}
