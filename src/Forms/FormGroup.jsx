@@ -7,8 +7,8 @@ const FormGroup = ({ children, onSubmit, validation, errors, setErrors }) => {
   const submitHandler = (e) => {
     e.preventDefault()
     const validationError = CheckFormValidation(errors, validation)
-    console.log(validationError)
-    console.log(validation)
+    // console.log(validationError)
+    // console.log(validation)
     if (Object.keys(validationError).length !== 0) {
       return setErrors(validationError)
     }

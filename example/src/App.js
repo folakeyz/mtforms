@@ -8,7 +8,9 @@ import {
   DateInput,
   Radio,
   ImageUpload,
-  AutoComplete
+  AutoComplete,
+  MTNExcel,
+  Modal
 } from 'mtforms'
 import 'mtforms/dist/index.css'
 const App = () => {
@@ -19,6 +21,7 @@ const App = () => {
     { item: 'Moses', value: 'David' }
   ]
   const [formData, setFormData] = useState({})
+  const [open, setOpen] = useState(false)
   const [errors, setErrors] = useState({})
 
   const handleChange = (name, value) => {
@@ -37,88 +40,82 @@ const App = () => {
   const handleChanges = (name, filterData) => {
     console.log(name, filterData)
   }
+
+  const tableColumn = ['S/N', 'Name', 'email', 'phone']
+  const content = [
+    {
+      sn: 1,
+      name: 'John Doe',
+      email: `gbenga@yahoo.com`,
+      phone: '08008080880'
+    },
+    {
+      sn: 2,
+      name: 'Femi Doe',
+      email: [
+        { name: `femi@yahoo.com`, url: 'https://lotusbetaanalytics.com' }
+      ],
+      phone: '08008080880'
+    },
+    {
+      sn: 3,
+      name: 'Dave Tom',
+      email: [{ name: `john@yahoo.com`, url: 'https://lotusbetaanalytics.ca' }],
+      phone: '084008080880',
+      hasLink: true
+    }
+  ]
+  const openHandler = () => {
+    setOpen(true)
+  }
   return (
-    <FormGroup
-      onSubmit={submitHandler}
-      validation={formData}
-      errors={errors}
-      setErrors={setErrors}
-    >
-      <Input
-        label='Name'
-        name='firstname'
-        onChange={handleChange}
-        value={formData['firstname']}
-        className='pBorder'
-        required={true}
-        validationHandler={validationHandler}
-        error={errors.firstname}
+    <>
+      <MTNExcel
+        filename='downloaded'
+        tableColumn={tableColumn}
+        content={content}
       />
-      <DateInput
-        label='Date'
-        name='date'
-        onChange={handleChange}
-        value={formData['date']}
-        className='pBorder'
-        required={true}
-        validationHandler={validationHandler}
-        error={errors.date}
-        placeholder='Date'
+      <Button
+        title={'Add'}
+        bgColor='btnYellow'
+        size='small'
+        onClick={openHandler}
       />
-      <Radio
-        label='Marital Status'
-        name='maritalStatus'
-        value={formData['maritalStatus']}
-        onChange={handleChange}
-        data={data}
+      <Modal
+        isVisible={open}
+        title={'Create Role'}
+        size='lg'
+        content={
+          <FormGroup
+            onSubmit={submitHandler}
+            validation={formData}
+            errors={errors}
+            setErrors={setErrors}
+          >
+            <Input
+              name='roleType'
+              label='Name'
+              value={formData['roleType']}
+              onChange={handleChange}
+              type='text'
+              validationHandler={validationHandler}
+              error={errors.name}
+              required={true}
+              size='large'
+            />
+
+            <Button
+              title='Cancel'
+              type='button'
+              bgColor='btnBlack'
+              size='small'
+            />
+          </FormGroup>
+        }
+        onClose={() => setOpen(false)}
+        footer=''
       />
-      <Select
-        className='blackBorder'
-        data={data}
-        required={true}
-        label='Select Test'
-        onChange={handleChange}
-        value={formData['item']}
-        name='item'
-        validationHandler={validationHandler}
-        error={errors.item}
-        filter='item'
-        filterValue='value'
-      />
-      <Textarea
-        label='Address'
-        name='address'
-        onChange={handleChanges}
-        value={formData['address']}
-        className='blackBorder'
-        required={true}
-        validationHandler={validationHandler}
-        error={errors.address}
-      />
-      <ImageUpload
-        name='photo'
-        label='Passport Photo'
-        value=''
-        onChange={handleChange}
-        loading={false}
-        size='medium'
-        bgColor='btnBlue'
-      />
-      <AutoComplete
-        data={data}
-        label='Test'
-        name='tname'
-        onChange={handleChanges}
-        value={formData['tname']}
-        className='pBorder'
-        required={true}
-        validationHandler={validationHandler}
-        error={errors.tname}
-        select='item'
-        // selectValue='value'
-      />
-      <Button type='submit' title='New' bgColor='btnYellow' />
-    </FormGroup>
+    </>
   )
 }
 
