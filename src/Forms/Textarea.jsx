@@ -16,7 +16,9 @@ const Textarea = ({
   validationHandler,
   value,
   size,
-  labelClassName
+  labelClassName,
+  cols,
+  rows,
 }) => {
   const onChangeHandler = (event) => {
     const { name, value } = event.target
@@ -54,6 +56,8 @@ const Textarea = ({
         style={style}
         onChange={onChangeHandler}
         onBlur={onValidationChange}
+        cols={cols}
+        rows={rows}
       ></textarea>
     </div>
   )
@@ -71,7 +75,9 @@ Textarea.defaultProps = {
   validationHandler: () => {},
   size: 'large',
   labelClassName: styles.labelBlack,
-  value: ''
+  value: '',
+  cols: '',
+  rows: '',
 }
 
 Textarea.propTypes = {
