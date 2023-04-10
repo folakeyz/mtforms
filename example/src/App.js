@@ -53,7 +53,7 @@ const App = () => {
       sn: 2,
       name: 'Femi Doe',
       email: [
-        { name: `femi@yahoo.com`, url: 'https://lotusbetaanalytics.com' }
+        { name: `MTN INCIDENT 0001 `, url: 'https://lotusbetaanalytics.com' }
       ],
       phone: '08008080880'
     },
@@ -61,8 +61,7 @@ const App = () => {
       sn: 3,
       name: 'Dave Tom',
       email: [{ name: `john@yahoo.com`, url: 'https://lotusbetaanalytics.ca' }],
-      phone: '084008080880',
-      hasLink: true
+      phone: '084008080880'
     }
   ]
   const openHandler = () => {
@@ -70,7 +69,7 @@ const App = () => {
   }
   return (
     <>
-      <MTNExcel
+      {/* <MTNExcel
         filename='downloaded'
         tableColumn={tableColumn}
         content={content}
@@ -80,7 +79,20 @@ const App = () => {
         bgColor='btnYellow'
         size='small'
         onClick={openHandler}
+      /> */}
+      <ImageUpload
+        name='test'
+        size='large'
+        bgColor='btnYellow'
+        error={errors.test}
+        required={true}
+        label='Image Upload'
+        onChange={handleChange}
+        validationHandler={validationHandler}
+        value={formData['test']}
+        multiple={false}
       />
+
       <Modal
         isVisible={open}
         title={'Create Role'}
