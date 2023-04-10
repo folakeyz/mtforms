@@ -83,7 +83,7 @@ const App = () => {
       <ImageUpload
         name='test'
         size='large'
-        bgColor='btnYellow'
+        className='bgTest'
         error={errors.test}
         required={true}
         label='Image Upload'

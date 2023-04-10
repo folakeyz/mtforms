@@ -48,7 +48,7 @@ const ImageUpload = ({
       <div className={styles.second}>
         <div className={styles.uploadWrapper}>
           <button
-            className={`${styles[bgColor]} ${styles.uploadBtn} ${styles[size]}`}
+            className={`${styles.uploadBtn} ${styles[size]} ${className} `}
             disabled={loading}
           >
             {!loading ? (
