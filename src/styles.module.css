@@ -289,6 +289,10 @@ button:disabled {
   background: rgba(255, 196, 35, 1);
   color: #000;
 }
+.success {
+  background: #28a745;
+  color: white;
+}
 .btnGray {
   background: #fafafa;
   color: #000;

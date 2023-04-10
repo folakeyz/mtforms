@@ -6,7 +6,7 @@ import { getSentenceFromCamelCase } from './Helpers'
 const ImageUpload = ({
   name,
   size,
-  bgColor,
+  bgColor = 'success',
   disabled,
   loading,
   error,
@@ -27,7 +27,7 @@ const ImageUpload = ({
     const { value } = event.target
     let errorMessage = ''
     if (!value && required) {
-      errorMessage = `Please enter ${getSentenceFromCamelCase(name)}.`
+      errorMessage = `Please upload ${getSentenceFromCamelCase(name)}.`
     }
     validationHandler(name, errorMessage)
   }
