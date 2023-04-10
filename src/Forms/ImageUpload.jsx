@@ -15,11 +15,17 @@ const ImageUpload = ({
   onChange,
   validationHandler,
   value,
-  multiple
+  multiple,
+  className
 }) => {
   const onChangeHandler = (event) => {
     const { name, files } = event.target
-    onChange && onChange(name, files)
+    const file = []
+
+    for (var i = 0; i < files.length; i++) {
+      file.push(files[i])
+    }
+    onChange && onChange(name, file)
   }
 
   const onValidationChange = (event) => {
@@ -90,7 +96,8 @@ ImageUpload.defaultProps = {
   validationHandler: () => {},
   size: 'medium',
   labelClassName: styles.labelBlack,
-  value: ''
+  value: '',
+  className: ''
 }
 
 ImageUpload.propTypes = {
@@ -110,7 +117,8 @@ ImageUpload.propTypes = {
   validationHandler: PropTypes.func,
   value: PropTypes.any.isRequired,
   size: PropTypes.string,
-  labelClassName: PropTypes.string
+  labelClassName: PropTypes.string,
+  className: PropTypes.string
 }
 
 export default ImageUpload
