@@ -67,6 +67,7 @@ const App = () => {
   const openHandler = () => {
     setOpen(true)
   }
+  console.log(formData, 'fprm')
   return (
     <>
       {/* <MTNExcel
@@ -89,7 +90,7 @@ const App = () => {
         label='Image Upload'
         onChange={handleChange}
         validationHandler={validationHandler}
-        value={formData['test']}
+        value={formData['olc']}
         multiple={false}
       />
 
