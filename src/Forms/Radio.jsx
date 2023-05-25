@@ -19,7 +19,8 @@ const Radio = ({
   validationHandler,
   value,
   size,
-  labelClassName
+  labelClassName,
+  filter
 }) => {
   const onChangeHandler = (event) => {
     const { name, value, type, checked } = event.target
@@ -75,7 +76,7 @@ const Radio = ({
               onBlur={onValidationChange}
               disabled={disabled}
             />
-            {item.value}
+            {filter ? item[filter] : item.value}
           </span>
         ))}
       </div>
@@ -101,10 +102,12 @@ Radio.defaultProps = {
   size: 'medium',
   labelClassName: styles.labelBlack,
   value: '',
-  data: []
+  data: [],
+  filter: ''
 }
 
 Radio.propTypes = {
+  filter: PropTypes.string,
   checked: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
