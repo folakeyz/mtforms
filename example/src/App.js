@@ -10,7 +10,8 @@ import {
   ImageUpload,
   AutoComplete,
   MTNExcel,
-  Modal
+  Modal,
+  PasswordInput
 } from 'mtforms'
 import 'mtforms/dist/index.css'
 const App = () => {
@@ -70,6 +71,17 @@ const App = () => {
   console.log(formData, 'fprm')
   return (
     <>
+      <PasswordInput
+        name='roleType'
+        label='Name'
+        value={formData['roleType']}
+        onChange={handleChange}
+        validationHandler={validationHandler}
+        error={errors.name}
+        required={true}
+        size='large'
+      />
+
       {/* <MTNExcel
         filename='downloaded'
         tableColumn={tableColumn}
