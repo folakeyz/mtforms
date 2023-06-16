@@ -10,6 +10,7 @@ import {
   ImageUpload,
   AutoComplete,
   MTNExcel,
+  MultiSelect,
   Modal,
   PasswordInput
 } from 'mtforms'
@@ -34,6 +35,7 @@ const App = () => {
     console.log(formData)
   }
 
+  console.log(formData)
   const validationHandler = (name, error) => {
     setErrors({ ...errors, [name]: error })
   }
@@ -80,6 +82,20 @@ const App = () => {
         error={errors.name}
         required={true}
         size='large'
+      />
+
+      <MultiSelect
+        name='category'
+        label='Store Category'
+        // value={formData['category']}
+        onChange={handleChange}
+        // type='text'
+        validationHandler={validationHandler}
+        error={errors.category}
+        required={true}
+        data={data}
+        filter='item'
+        filterValue='value'
       />
 
       {/* <MTNExcel
