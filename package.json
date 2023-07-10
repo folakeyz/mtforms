@@ -1,6 +1,6 @@
 {
   "name": "mtforms",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "form components for mtn sharepoint ",
   "license": "MIT",
   "repository": "folakeyz/mtforms",
@@ -55,7 +55,10 @@
   },
   "homepage": "https://github.com/folakeyz/mtforms.git",
   "dependencies": {
+    "file-saver": "^2.0.5",
     "focus-trap-react": "^10.0.0",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.29",
     "react-html-table-to-excel": "^2.0.0",
     "react-icons": "^4.8.0",
     "react-select": "^5.7.3"

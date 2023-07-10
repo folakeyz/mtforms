@@ -72,6 +72,7 @@ const Radio = ({
               value={item.value}
               name={name}
               defaultChecked={value === item.value}
+              checked={value === item.value}
               required={required}
               onBlur={onValidationChange}
               disabled={disabled}

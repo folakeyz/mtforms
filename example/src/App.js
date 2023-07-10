@@ -12,7 +12,8 @@ import {
   MTNExcel,
   MultiSelect,
   Modal,
-  PasswordInput
+  PasswordInput,
+  Table
 } from 'mtforms'
 import 'mtforms/dist/index.css'
 const App = () => {
@@ -155,6 +156,14 @@ const App = () => {
         }
         onClose={() => setOpen(false)}
         footer=''
+      />
+
+      <Table
+        data={data}
+        columns={[
+          { title: 'Name', field: 'item' },
+          { title: 'last', field: 'value' }
+        ]}
       />
     </>
   )
