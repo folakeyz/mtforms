@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { saveAs } from 'file-saver'
-import styles from '../styles.module.css'
+import styles from '../table.module.css'
 import { jsPDF } from 'jspdf'
 import 'jspdf-autotable'
 
