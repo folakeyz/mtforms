@@ -276,76 +276,18 @@ const CustomTable = ({
           Download as CSV
         </button>
       </div>
-
-      <table
-        className={styles.customTable}
-        style={{ width: '100%', borderCollapse: 'collapse' }}
-      >
-        <thead>
-          <tr>
-            {reverseAction && (
-              <Fragment>{actions?.length > 0 && <th>Actions</th>}</Fragment>
-            )}
-            {showCheckbox && (
-              <th
-                style={{
-                  padding: '16px',
-                  borderBottom: '1px solid rgba(224, 224, 224, 1)',
-                  textAlign: 'left'
-                }}
-              >
-                <input
-                  type='checkbox'
-                  checked={selectedRows.length === filteredData.length}
-                  onChange={() =>
-                    selectedRows.length === filteredData.length
-                      ? clearSelectedRows()
-                      : selectAllRows()
-                  }
-                />
-              </th>
-            )}
-
-            {columns.map((column, i) => (
-              <th
-                key={i}
-                style={{
-                  padding: '16px',
-                  borderBottom: '1px solid rgba(224, 224, 224, 1)',
-                  textAlign: 'left',
-                  backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                  fontWeight: 600
-                }}
-              >
-                {column.title}
-                {showFilter && (
-                  <input
-                    type='text'
-                    value={filterValues[column.field] || ''}
-                    onChange={(e) => handleFilterChange(e, column.field)}
-                    placeholder={`Filter ${column.title}`}
-                    style={{ width: '100%' }}
-                  />
-                )}
-              </th>
-            ))}
-            {!reverseAction && (
-              <Fragment>{actions?.length > 0 && <th>Actions</th>}</Fragment>
-            )}
-          </tr>
-        </thead>
-        <tbody>
-          {displayedData.map((item, i) => (
-            <tr key={i}>
+      <div className={styles.tableContainerStyle}>
+        <table
+          className={styles.customTable}
+          style={{ width: '100%', borderCollapse: 'collapse' }}
+        >
+          <thead>
+            <tr>
               {reverseAction && (
-                <Fragment>
-                  {actions?.length > 0 && (
-                    <td>{renderActionsDropdown(item)}</td>
-                  )}
-                </Fragment>
+                <Fragment>{actions?.length > 0 && <th>Actions</th>}</Fragment>
               )}
               {showCheckbox && (
-                <td
+                <th
                   style={{
                     padding: '16px',
                     borderBottom: '1px solid rgba(224, 224, 224, 1)',
@@ -354,36 +296,95 @@ const CustomTable = ({
                 >
                   <input
                     type='checkbox'
-                    checked={selectedRows.includes(item[selectID])}
-                    onChange={(e) =>
-                      handleRowSelect(item[selectID], e.target.checked)
+                    checked={selectedRows.length === filteredData.length}
+                    onChange={() =>
+                      selectedRows.length === filteredData.length
+                        ? clearSelectedRows()
+                        : selectAllRows()
                     }
                   />
-                </td>
+                </th>
               )}
+
               {columns.map((column, i) => (
-                <td
+                <th
                   key={i}
                   style={{
                     padding: '16px',
                     borderBottom: '1px solid rgba(224, 224, 224, 1)',
-                    textAlign: 'left'
+                    textAlign: 'left',
+                    backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                    fontWeight: 600
                   }}
                 >
-                  {renderColumnValue(item, column)}
-                </td>
+                  {column.title}
+                  {showFilter && (
+                    <input
+                      type='text'
+                      value={filterValues[column.field] || ''}
+                      onChange={(e) => handleFilterChange(e, column.field)}
+                      placeholder={`Filter ${column.title}`}
+                      style={{ width: '100%' }}
+                    />
+                  )}
+                </th>
               ))}
               {!reverseAction && (
-                <Fragment>
-                  {actions?.length > 0 && (
-                    <td>{renderActionsDropdown(item)}</td>
-                  )}
-                </Fragment>
+                <Fragment>{actions?.length > 0 && <th>Actions</th>}</Fragment>
               )}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {displayedData.map((item, i) => (
+              <tr key={i}>
+                {reverseAction && (
+                  <Fragment>
+                    {actions?.length > 0 && (
+                      <td>{renderActionsDropdown(item)}</td>
+                    )}
+                  </Fragment>
+                )}
+                {showCheckbox && (
+                  <td
+                    style={{
+                      padding: '16px',
+                      borderBottom: '1px solid rgba(224, 224, 224, 1)',
+                      textAlign: 'left'
+                    }}
+                  >
+                    <input
+                      type='checkbox'
+                      checked={selectedRows.includes(item[selectID])}
+                      onChange={(e) =>
+                        handleRowSelect(item[selectID], e.target.checked)
+                      }
+                    />
+                  </td>
+                )}
+                {columns.map((column, i) => (
+                  <td
+                    key={i}
+                    style={{
+                      padding: '16px',
+                      borderBottom: '1px solid rgba(224, 224, 224, 1)',
+                      textAlign: 'left'
+                    }}
+                  >
+                    {renderColumnValue(item, column)}
+                  </td>
+                ))}
+                {!reverseAction && (
+                  <Fragment>
+                    {actions?.length > 0 && (
+                      <td>{renderActionsDropdown(item)}</td>
+                    )}
+                  </Fragment>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       <div className={styles.right}>
         <select

@@ -93,3 +93,11 @@
 .dropdownItem:hover {
     background-color: #f2f2f2;
 }
+
+.tableContainerStyle {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
+    overflow-y: auto;
+}
