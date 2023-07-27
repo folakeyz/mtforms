@@ -1,22 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { saveAs } from 'file-saver'
 import styles from '../table.module.css'
 import { jsPDF } from 'jspdf'
 import 'jspdf-autotable'
+import { FaEllipsisH } from 'react-icons/fa'
 
-const Table = ({
+const CustomTable = ({
   data = [],
   columns = [],
   showCheckbox = false,
+  showFilter = false,
   selectID = '_id',
   onSelectedRowsChange,
-  clearSelections
+  clearSelections,
+  actions,
+  paperOrientation = 'landscape',
+  paperSize = 'a4',
+  filename = 'download'
 }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchQuery, setSearchQuery] = useState('')
-  const [filterValue, setFilterValue] = useState('')
   const [selectedRows, setSelectedRows] = useState([])
   const [itemsPerPage, setItemsPerPage] = useState(10)
+  const [filterValues, setFilterValues] = useState({})
+  const [activeDropdown, setActiveDropdown] = useState(null)
+  const dropdownRefs = useRef({})
 
   const getColumnValue = (item, field) => {
     const fieldKeys = field.split('.')
@@ -38,14 +46,27 @@ const Table = ({
       return false
     })
 
-    const matchesFilter = Object.values(item).some((value) => {
-      if (typeof value === 'string') {
-        return value.toLowerCase().includes(filterValue.toLowerCase())
+    // const matchesFilter = Object.values(item).some((value) => {
+    //   if (typeof value === "string") {
+    //     return value.toLowerCase().includes(filterValue.toLowerCase());
+    //   }
+    //   return false;
+    // });
+    const getFieldByPath = (object, path) => {
+      const properties = path.split('.')
+      return properties.reduce((value, property) => value?.[property], object)
+    }
+    const matchesFilters = Object.entries(filterValues).every(
+      ([field, filterValue]) => {
+        const itemValue = getFieldByPath(item, field)
+        return itemValue !== undefined && itemValue !== null
+          ? typeof itemValue === 'string' &&
+              itemValue.toLowerCase().includes(filterValue.toLowerCase())
+          : true
       }
-      return false
-    })
+    )
 
-    return matchesSearchQuery && matchesFilter
+    return matchesSearchQuery && matchesFilters
   })
 
   const handleSearchChange = (e) => {
@@ -53,9 +74,13 @@ const Table = ({
     setSearchQuery(e.target.value)
   }
 
-  const handleFilterChange = (e) => {
+  const handleFilterChange = (e, field) => {
+    const value = e.target.value
+    setFilterValues((prevFilterValues) => ({
+      ...prevFilterValues,
+      [field]: value
+    }))
     setCurrentPage(1)
-    setFilterValue(e.target.value)
   }
 
   const handlePageChange = (page) => {
@@ -92,7 +117,10 @@ const Table = ({
   const displayedData = filteredData.slice(startIndex, endIndex)
 
   const downloadPDF = () => {
-    const doc = new jsPDF()
+    const doc = new jsPDF({
+      orientation: paperOrientation,
+      format: paperSize
+    })
     const tableData = displayedData.map((item) => {
       const rowData = columns.map((column) =>
         getColumnValue(item, column.field)
@@ -107,7 +135,7 @@ const Table = ({
       body: tableData
     })
 
-    doc.save('table_items.pdf')
+    doc.save(`${filename}.pdf`)
   }
   const downloadCSV = () => {
     const csvContent = `${columns
@@ -118,13 +146,84 @@ const Table = ({
       )
       .join('\n')}`
     const csvBlob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
-    saveAs(csvBlob, 'table_items.csv')
+    saveAs(csvBlob, `${filename}.csv`)
   }
   useEffect(() => {
     if (clearSelections) {
       setSelectedRows([])
     }
   }, [clearSelections])
+
+  const handleDropdownToggle = (rowId) => {
+    setActiveDropdown(activeDropdown === rowId ? null : rowId)
+  }
+
+  const handleDropdownClose = () => {
+    setActiveDropdown(null)
+  }
+
+  const renderActionsDropdown = (item) => {
+    const validActions = actions(item) || []
+
+    if (validActions.length === 0) return null
+
+    return (
+      <div
+        className={styles.dropdown}
+        ref={(el) => (dropdownRefs.current[item[selectID]] = el)}
+      >
+        <span
+          className={styles.dropdownToggle}
+          onClick={() => handleDropdownToggle(item[selectID])}
+        >
+          <FaEllipsisH />
+        </span>
+        {activeDropdown === item[selectID] && (
+          <div className={styles.dropdownMenu}>
+            {validActions.map((action) => (
+              <div
+                key={action.name}
+                className={styles.dropdownItem}
+                onClick={() => {
+                  action.onClick(item)
+                  handleDropdownClose() // Close the dropdown after clicking an action
+                }}
+              >
+                {action.name}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        !Object.values(dropdownRefs.current).some((ref) =>
+          ref.contains(event.target)
+        )
+      ) {
+        handleDropdownClose()
+      }
+    }
+
+    document.addEventListener('mousedown', handleOutsideClick)
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+  }, [])
+
+  const renderColumnValue = (item, column) => {
+    if (column.render) {
+      return column.render(item)
+    } else {
+      return getColumnValue(item, column.field)
+    }
+  }
+
   return (
     <div className={styles.tableContainer}>
       <div className={styles.right}>
@@ -141,19 +240,7 @@ const Table = ({
             marginRight: '20px'
           }}
         />
-        <input
-          type='text'
-          value={filterValue}
-          onChange={handleFilterChange}
-          placeholder='Filter'
-          style={{
-            padding: '8px',
-            border: 'none',
-            borderRadius: '4px',
-            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.12)',
-            marginRight: '20px'
-          }}
-        />
+
         <button
           onClick={downloadPDF}
           style={{
@@ -226,8 +313,18 @@ const Table = ({
                 }}
               >
                 {column.title}
+                {showFilter && (
+                  <input
+                    type='text'
+                    value={filterValues[column.field] || ''}
+                    onChange={(e) => handleFilterChange(e, column.field)}
+                    placeholder={`Filter ${column.title}`}
+                    style={{ width: '100%' }}
+                  />
+                )}
               </th>
             ))}
+            {actions?.length > 0 && <th>Actions</th>}
           </tr>
         </thead>
         <tbody>
@@ -259,9 +356,10 @@ const Table = ({
                     textAlign: 'left'
                   }}
                 >
-                  {getColumnValue(item, column.field)}
+                  {renderColumnValue(item, column)}
                 </td>
               ))}
+              {actions?.length > 0 && <td>{renderActionsDropdown(item)}</td>}
             </tr>
           ))}
         </tbody>
@@ -331,4 +429,4 @@ const Table = ({
   )
 }
 
-export default Table
+export default CustomTable

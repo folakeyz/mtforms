@@ -46,6 +46,25 @@ const App = () => {
   }
 
   const tableColumn = ['S/N', 'Name', 'email', 'phone']
+  const col = [
+    {
+      title: 'Passport',
+      field: 'Passport',
+      render: (item) => (
+        <img
+          src={`https://upload.wikimedia.org/wikipedia/commons/b/b9/Nigerian_Enhanced_ePassport.webp`}
+          alt=''
+          height='50'
+          width='50'
+          style={{ borderRadius: '50%' }}
+        />
+      )
+    },
+    { title: 'Name', field: 'name' },
+    { title: 'Email', field: 'email' },
+    { title: 'Phone', field: 'phone' },
+    { title: 'Test', field: 'test.name' }
+  ]
   const content = [
     {
       sn: 1,
@@ -56,15 +75,15 @@ const App = () => {
     {
       sn: 2,
       name: 'Femi Doe',
-      email: [
-        { name: `MTN INCIDENT 0001 `, url: 'https://lotusbetaanalytics.com' }
-      ],
+      // email: [
+      //   { name: `MTN INCIDENT 0001 `, url: 'https://lotusbetaanalytics.com' }
+      // ],
       phone: '08008080880'
     },
     {
       sn: 3,
       name: 'Dave Tom',
-      email: [{ name: `john@yahoo.com`, url: 'https://lotusbetaanalytics.ca' }],
+      test: { name: `john@yahoo.com`, url: 'https://lotusbetaanalytics.ca' },
       phone: '084008080880'
     }
   ]
@@ -72,6 +91,20 @@ const App = () => {
     setOpen(true)
   }
   console.log(formData, 'fprm')
+
+  const actions = (item) => [
+    {
+      name: 'Edit',
+      onClick: (res) => {
+        setOpen(true)
+        setFormData(res)
+      }
+    },
+    {
+      name: 'Delete',
+      onClick: (res) => {}
+    }
+  ]
   return (
     <>
       <PasswordInput
@@ -99,6 +132,17 @@ const App = () => {
         filterValue='value'
       />
 
+      <Radio
+        label='Sex'
+        name='sex'
+        value={formData['sex']}
+        onChange={handleChange}
+        data={content}
+        validationHandler={validationHandler}
+        error={errors.sex}
+        required={true}
+        filter='name'
+      />
       {/* <MTNExcel
         filename='downloaded'
         tableColumn={tableColumn}
@@ -159,11 +203,11 @@ const App = () => {
       />
 
       <Table
-        data={data}
-        columns={[
-          { title: 'Name', field: 'item' },
-          { title: 'last', field: 'value' }
-        ]}
+        data={content}
+        columns={col}
+        actions={actions}
+        selectID='sn'
+        showFilter={true}
       />
     </>
   )

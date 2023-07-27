@@ -14,6 +14,7 @@
     padding: 8px;
     border-bottom: 1px solid #ddd;
     text-align: left;
+    font-size: 13px;
 }
 
 .customTable th {
@@ -57,4 +58,38 @@
     justify-content: flex-end;
     align-items: center;
     padding: 1rem 0;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdownToggle {
+    padding: 8px;
+    background-color: #f2f2f2;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 9999 !important;
+    display: flex;
+    flex-direction: column;
+    min-width: 120px;
+    padding: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dropdownItem {
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.dropdownItem:hover {
+    background-color: #f2f2f2;
 }

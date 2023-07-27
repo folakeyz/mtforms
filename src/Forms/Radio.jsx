@@ -25,7 +25,9 @@ const Radio = ({
   const onChangeHandler = (event) => {
     const { name, value, type, checked } = event.target
     const inputValue = type === 'checkbox' ? checked : value
-    onChange && onChange(name, inputValue)
+    // Convert the inputValue to a boolean if it's a checkbox
+    const finalValue = type === 'checkbox' ? Boolean(inputValue) : inputValue
+    onChange && onChange(name, finalValue)
   }
 
   const onValidationChange = (event) => {
@@ -62,17 +64,17 @@ const Radio = ({
           </span>
         ) : null}
       </label>
-      <div className={styles.options}>
+      <div className={styles.Radiooptions}>
         {data.map((item, i) => (
           <span key={i}>
             <input
-              id={name}
+              id={name[i]}
               type='radio'
               onChange={onChangeHandler}
-              value={item.value}
+              value={filter ? item[filter] : item.value}
               name={name}
-              defaultChecked={value === item.value}
-              checked={value === item.value}
+              // defaultChecked={value === item.value}
+              checked={filter ? value === item[filter] : value === item.value}
               required={required}
               onBlur={onValidationChange}
               disabled={disabled}
