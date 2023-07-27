@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { saveAs } from 'file-saver'
 import styles from '../table.module.css'
 import { jsPDF } from 'jspdf'
@@ -16,7 +16,8 @@ const CustomTable = ({
   actions,
   paperOrientation = 'landscape',
   paperSize = 'a4',
-  filename = 'download'
+  filename = 'download',
+  reverseAction = false
 }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchQuery, setSearchQuery] = useState('')
@@ -282,6 +283,9 @@ const CustomTable = ({
       >
         <thead>
           <tr>
+            {reverseAction && (
+              <Fragment>{actions?.length > 0 && <th>Actions</th>}</Fragment>
+            )}
             {showCheckbox && (
               <th
                 style={{
@@ -301,6 +305,7 @@ const CustomTable = ({
                 />
               </th>
             )}
+
             {columns.map((column, i) => (
               <th
                 key={i}
@@ -324,12 +329,21 @@ const CustomTable = ({
                 )}
               </th>
             ))}
-            {actions?.length > 0 && <th>Actions</th>}
+            {!reverseAction && (
+              <Fragment>{actions?.length > 0 && <th>Actions</th>}</Fragment>
+            )}
           </tr>
         </thead>
         <tbody>
           {displayedData.map((item, i) => (
             <tr key={i}>
+              {reverseAction && (
+                <Fragment>
+                  {actions?.length > 0 && (
+                    <td>{renderActionsDropdown(item)}</td>
+                  )}
+                </Fragment>
+              )}
               {showCheckbox && (
                 <td
                   style={{
@@ -359,7 +373,13 @@ const CustomTable = ({
                   {renderColumnValue(item, column)}
                 </td>
               ))}
-              {actions?.length > 0 && <td>{renderActionsDropdown(item)}</td>}
+              {!reverseAction && (
+                <Fragment>
+                  {actions?.length > 0 && (
+                    <td>{renderActionsDropdown(item)}</td>
+                  )}
+                </Fragment>
+              )}
             </tr>
           ))}
         </tbody>

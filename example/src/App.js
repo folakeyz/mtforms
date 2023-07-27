@@ -208,6 +208,7 @@ const App = () => {
         actions={actions}
         selectID='sn'
         showFilter={true}
+        reverseAction
       />
     </>
   )

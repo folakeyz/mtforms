@@ -83,6 +83,11 @@ const MultiSelect = ({
     return newOption
   }
 
+  const removeHandler = (id) => {
+    const items = selectedOptions?.filter((x) => x !== id)
+    setSelectedOptions(items)
+  }
+
   return (
     <div
       className={`${styles.InputContainer} ${styles[size]}`}
@@ -105,7 +110,12 @@ const MultiSelect = ({
       >
         <div className={styles.cxtFlex}>
           {selectedOptions.map((option, i) => (
-            <Tag item={getItemName(option)} key={i} />
+            <Tag
+              item={getItemName(option)}
+              key={i}
+              remove={removeHandler}
+              value={option}
+            />
           ))}
         </div>
       </div>
