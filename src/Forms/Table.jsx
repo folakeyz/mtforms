@@ -28,7 +28,7 @@ const CustomTable = ({
   const dropdownRefs = useRef({})
 
   const getColumnValue = (item, field) => {
-    const fieldKeys = field.split('.')
+    const fieldKeys = field?.split('.')
     let value = item
     for (const key of fieldKeys) {
       value = value[key]
@@ -39,10 +39,10 @@ const CustomTable = ({
     return value
   }
 
-  const filteredData = data.filter((item) => {
-    const matchesSearchQuery = Object.values(item).some((value) => {
+  const filteredData = data?.filter((item) => {
+    const matchesSearchQuery = Object?.values(item).some((value) => {
       if (typeof value === 'string') {
-        return value.toLowerCase().includes(searchQuery.toLowerCase())
+        return value?.toLowerCase()?.includes(searchQuery?.toLowerCase())
       }
       return false
     })
@@ -54,15 +54,15 @@ const CustomTable = ({
     //   return false;
     // });
     const getFieldByPath = (object, path) => {
-      const properties = path.split('.')
+      const properties = path?.split('.')
       return properties.reduce((value, property) => value?.[property], object)
     }
-    const matchesFilters = Object.entries(filterValues).every(
+    const matchesFilters = Object?.entries(filterValues).every(
       ([field, filterValue]) => {
         const itemValue = getFieldByPath(item, field)
         return itemValue !== undefined && itemValue !== null
           ? typeof itemValue === 'string' &&
-              itemValue.toLowerCase().includes(filterValue.toLowerCase())
+              itemValue.toLowerCase()?.includes(filterValue.toLowerCase())
           : true
       }
     )
@@ -97,14 +97,14 @@ const CustomTable = ({
       if (isSelected) {
         return [...prevSelectedRows, rowId]
       } else {
-        return prevSelectedRows.filter((id) => id !== rowId)
+        return prevSelectedRows?.filter((id) => id !== rowId)
       }
     })
     onSelectedRowsChange(updatedSelectedRows)
   }
 
   const selectAllRows = () => {
-    const allRowIds = filteredData.map((item) => item[selectID])
+    const allRowIds = filteredData?.map((item) => item[selectID])
     setSelectedRows(allRowIds)
   }
 
@@ -112,24 +112,24 @@ const CustomTable = ({
     setSelectedRows([])
   }
 
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage)
+  const totalPages = Math.ceil(filteredData?.length / itemsPerPage)
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
-  const displayedData = filteredData.slice(startIndex, endIndex)
+  const displayedData = filteredData?.slice(startIndex, endIndex)
 
   const downloadPDF = () => {
     const doc = new jsPDF({
       orientation: paperOrientation,
       format: paperSize
     })
-    const tableData = displayedData.map((item) => {
-      const rowData = columns.map((column) =>
-        getColumnValue(item, column.field)
+    const tableData = displayedData?.map((item) => {
+      const rowData = columns?.map((column) =>
+        getColumnValue(item, column?.field)
       )
       return rowData
     })
 
-    const tableHead = columns.map((column) => column.title)
+    const tableHead = columns?.map((column) => column?.title)
 
     doc.autoTable({
       head: [tableHead],
@@ -166,7 +166,7 @@ const CustomTable = ({
   const renderActionsDropdown = (item) => {
     const validActions = actions(item) || []
 
-    if (validActions.length === 0) return null
+    if (validActions?.length === 0) return null
 
     return (
       <div
@@ -202,8 +202,8 @@ const CustomTable = ({
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (
-        !Object.values(dropdownRefs.current).some((ref) =>
-          ref.contains(event.target)
+        !Object?.values(dropdownRefs?.current)?.some((ref) =>
+          ref?.contains(event?.target)
         )
       ) {
         handleDropdownClose()
@@ -219,7 +219,7 @@ const CustomTable = ({
 
   const renderColumnValue = (item, column) => {
     if (column.render) {
-      return column.render(item)
+      return column?.render(item)
     } else {
       return getColumnValue(item, column.field)
     }
