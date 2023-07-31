@@ -26,7 +26,7 @@ export const getSentenceFromCamelCase = (message) => {
   return errorMessage.trim()
 }
 
-function CheckFormValidation(errors, data) {
+export default function CheckFormValidation(errors, data) {
   const finalErrors = {}
 
   Object.keys(data).forEach((key) => {
