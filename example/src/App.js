@@ -105,6 +105,9 @@ const App = () => {
       onClick: (res) => {}
     }
   ]
+  const autoHandler = (name, value) => {
+    setFormData({ ...formData, [name]: value.item })
+  }
   return (
     <>
       <PasswordInput
@@ -118,18 +121,17 @@ const App = () => {
         size='large'
       />
 
-      <MultiSelect
+      <AutoComplete
         name='category'
         label='Store Category'
-        // value={formData['category']}
-        onChange={handleChange}
+        value={formData['category']}
+        onChange={autoHandler}
         // type='text'
         validationHandler={validationHandler}
         error={errors.category}
         required={true}
         data={data}
-        filter='item'
-        filterValue='value'
+        select='item'
       />
 
       <Radio

@@ -17,7 +17,8 @@ const CustomTable = ({
   paperOrientation = 'landscape',
   paperSize = 'a4',
   filename = 'download',
-  reverseAction = false
+  reverseAction = false,
+  exportBtns = true
 }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchQuery, setSearchQuery] = useState('')
@@ -241,40 +242,43 @@ const CustomTable = ({
             marginRight: '20px'
           }}
         />
-
-        <button
-          onClick={downloadPDF}
-          style={{
-            marginLeft: '8px',
-            padding: '8px 16px',
-            border: 'none',
-            borderRadius: '4px',
-            backgroundColor: '#ffcc00',
-            color: 'black',
-            fontWeight: 500,
-            cursor: 'pointer',
-            boxShadow: '0 2px 5px rgba(200, 204, 0, 0.8)',
-            marginRight: '20px'
-          }}
-        >
-          Download as PDF
-        </button>
-        <button
-          onClick={downloadCSV}
-          style={{
-            marginLeft: '8px',
-            padding: '8px 16px',
-            border: 'none',
-            borderRadius: '4px',
-            backgroundColor: '#000',
-            color: 'white',
-            fontWeight: 500,
-            cursor: 'pointer',
-            boxShadow: '0 2px 5px rgba(3, 0, 0, 0.5)'
-          }}
-        >
-          Download as CSV
-        </button>
+        {exportBtns && (
+          <>
+            <button
+              onClick={downloadPDF}
+              style={{
+                marginLeft: '8px',
+                padding: '8px 16px',
+                border: 'none',
+                borderRadius: '4px',
+                backgroundColor: '#ffcc00',
+                color: 'black',
+                fontWeight: 500,
+                cursor: 'pointer',
+                boxShadow: '0 2px 5px rgba(200, 204, 0, 0.8)',
+                marginRight: '20px'
+              }}
+            >
+              Download as PDF
+            </button>
+            <button
+              onClick={downloadCSV}
+              style={{
+                marginLeft: '8px',
+                padding: '8px 16px',
+                border: 'none',
+                borderRadius: '4px',
+                backgroundColor: '#000',
+                color: 'white',
+                fontWeight: 500,
+                cursor: 'pointer',
+                boxShadow: '0 2px 5px rgba(3, 0, 0, 0.5)'
+              }}
+            >
+              Download as CSV
+            </button>
+          </>
+        )}
       </div>
       <div className={styles.tableContainerStyle}>
         <table

@@ -11,8 +11,8 @@ const DateInput = ({
   fixLength,
   required,
   label,
-  minLength,
-  maxLength,
+  min,
+  max,
   name,
   onChange,
   placeholder,
@@ -37,18 +37,6 @@ const DateInput = ({
     let errorMessage = ''
     if (!value && required) {
       errorMessage = `Please enter ${getSentenceFromCamelCase(name)}.`
-    } else if (minLength && value.length < minLength) {
-      errorMessage = `${
-        name.charAt(0).toUpperCase() + getSentenceFromCamelCase(name).slice(1)
-      } must be at least ${minLength} characters long.`
-    } else if (maxLength && value.length > maxLength) {
-      errorMessage = `${
-        name.charAt(0).toUpperCase() + getSentenceFromCamelCase(name).slice(1)
-      } must be ${minLength} characters long.`
-    } else if (fixLength && value.length !== fixLength) {
-      errorMessage = `${
-        name.charAt(0).toUpperCase() + getSentenceFromCamelCase(name).slice(1)
-      } must be ${fixLength} characters.`
     } else if (value && reqType && !getRegExp(reqType).test(value)) {
       errorMessage = `Please enter valid ${getSentenceFromCamelCase(name)}.`
     }
@@ -79,6 +67,8 @@ const DateInput = ({
         onChange={onChangeHandler}
         onBlur={onValidationChange}
         onFocus={(e) => (e.currentTarget.type = 'date')}
+        min={min}
+        max={max}
       />
     </div>
   )
@@ -92,8 +82,8 @@ DateInput.defaultProps = {
   fixLength: 0,
   required: false,
   label: '',
-  minLength: 0,
-  maxLength: 0,
+  min: '',
+  max: '',
   placeholder: '',
   reqType: '',
   style: {},
@@ -112,8 +102,8 @@ DateInput.propTypes = {
   fixLength: PropTypes.number,
   required: PropTypes.bool,
   label: PropTypes.string.isRequired,
-  minLength: PropTypes.number,
-  maxLength: PropTypes.number,
+  min: PropTypes.string,
+  max: PropTypes.string,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
