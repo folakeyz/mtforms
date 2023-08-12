@@ -168,11 +168,12 @@ const App = () => {
         value={formData['olc']}
         multiple={false}
       />
-
+      <button onClick={() => setOpen(!open)}>Open</button>
       <Modal
         isVisible={open}
         title={'Create Role'}
         size='lg'
+        // theme='black'
         content={
           <FormGroup
             onSubmit={submitHandler}

@@ -7,7 +7,8 @@ const Modal = ({
   content,
   footer,
   onClose,
-  size = 'md'
+  size = 'md',
+  theme = 'white'
 }) => {
   const keydownHandler = ({ key }) => {
     switch (key) {
@@ -26,13 +27,16 @@ const Modal = ({
   return !isVisible ? null : (
     <div className={styles.modal} onClick={onClose}>
       <div className={`${styles.closeCon} ${styles[size]}`}>
-        <span className={styles.modalClose} onClick={onClose}>
+        <span
+          className={`${styles.modalClose} ${styles[theme]}`}
+          onClick={onClose}
+        >
           &times;
         </span>
       </div>
 
       <div
-        className={`${styles.modalDialog} ${styles[size]}`}
+        className={`${styles.modalDialog} ${styles[size]} ${styles[theme]}`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className={styles.modalHeader}>
