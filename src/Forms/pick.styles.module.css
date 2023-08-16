@@ -1,0 +1,35 @@
+.peoplepicker {
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 8px;
+  width: 300px;
+}
+
+.peoplepickerlabel {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+#peoplepickerinput {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.peoplepickerresults {
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 4px;
+}
+
+.peoplepickerresult {
+  padding: 6px;
+  cursor: pointer;
+}
+
+.peoplepickerresult:hover {
+  background-color: #f0f0f0;
+}

@@ -13,7 +13,8 @@ import {
   MultiSelect,
   Modal,
   PasswordInput,
-  Table
+  Table,
+  PeoplePicker
 } from 'mtforms'
 import 'mtforms/dist/index.css'
 const App = () => {
@@ -108,6 +109,11 @@ const App = () => {
   const autoHandler = (name, value) => {
     setFormData({ ...formData, [name]: value.item })
   }
+
+  const handlePeoplePickerChange = (selectedUser) => {
+    console.log('Selected user:', selectedUser)
+  }
+
   return (
     <>
       <PasswordInput
@@ -212,6 +218,20 @@ const App = () => {
         selectID='sn'
         showFilter={true}
         reverseAction
+      />
+
+      <PeoplePicker
+        titleText='Select Members'
+        personSelectionLimit={10}
+        groupName=''
+        showtooltip={true}
+        required={true}
+        disabled={false}
+        showHiddenInUI={false}
+        principalTypes={['User']}
+        resolveDelay={1000}
+        defaultSelectedUsers={[]}
+        onChange={handlePeoplePickerChange}
       />
     </>
   )
