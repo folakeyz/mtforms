@@ -358,7 +358,7 @@ button:disabled {
   padding: 8px;
 }
 
-.autocomplete>.active,
+.autocomplete > .active,
 .autocomplete li:hover {
   background-color: whitesmoke;
   cursor: pointer;
@@ -380,7 +380,6 @@ button:disabled {
   margin-left: 90%;
 }
 
-
 .cxt {
   width: 100%;
   min-height: 3.5rem;
@@ -389,7 +388,6 @@ button:disabled {
   border-radius: 10px;
   border: 1px solid gainsboro;
   background: none;
-
 }
 
 .cxtFlex {
@@ -402,7 +400,7 @@ button:disabled {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   background: whitesmoke;
   border: 1px solid gainsboro;
   color: black;
@@ -426,8 +424,6 @@ button:disabled {
   height: 7rem;
   overflow: hidden;
   overflow-y: auto;
-
-
 }
 
 .options::-webkit-scrollbar {
@@ -453,10 +449,6 @@ button:disabled {
   height: 10px;
   margin-right: 1rem;
 }
-
-
-
-
 
 @media screen and (max-width: 700px) {
   .inputFlex {

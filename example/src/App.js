@@ -110,8 +110,8 @@ const App = () => {
     setFormData({ ...formData, [name]: value.item })
   }
 
-  const handlePeoplePickerChange = (selectedUser) => {
-    console.log('Selected user:', selectedUser)
+  const handlePeoplePickerChange = (name, value) => {
+    console.log('Selected user:', name, value)
   }
 
   return (
@@ -221,17 +221,16 @@ const App = () => {
       />
 
       <PeoplePicker
-        titleText='Select Members'
-        personSelectionLimit={10}
-        groupName=''
-        showtooltip={true}
-        required={true}
-        disabled={false}
-        showHiddenInUI={false}
-        principalTypes={['User']}
-        resolveDelay={1000}
-        defaultSelectedUsers={[]}
+        name='category'
+        label='Store Category'
+        value={formData['category']}
         onChange={handlePeoplePickerChange}
+        // type='text'
+        validationHandler={validationHandler}
+        error={errors.category}
+        required={true}
+        data={data}
+        select='item'
       />
     </>
   )
