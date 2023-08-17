@@ -64,14 +64,15 @@ const App = () => {
     { title: 'Name', field: 'name' },
     { title: 'Email', field: 'email' },
     { title: 'Phone', field: 'phone' },
-    { title: 'Test', field: 'test.name' }
+    { title: 'Test', field: 'tests' }
   ]
   const content = [
     {
       sn: 1,
       name: 'John Doe',
       email: `gbenga@yahoo.com`,
-      phone: '08008080880'
+      phone: '08008080880',
+      tests: '08008080880'
     },
     {
       sn: 2,
@@ -79,13 +80,15 @@ const App = () => {
       // email: [
       //   { name: `MTN INCIDENT 0001 `, url: 'https://lotusbetaanalytics.com' }
       // ],
-      phone: '08008080880'
+      phone: '08008080880',
+      tests: '08008080880'
     },
     {
       sn: 3,
       name: 'Dave Tom',
       test: { name: `john@yahoo.com`, url: 'https://lotusbetaanalytics.ca' },
-      phone: '084008080880'
+      phone: '084008080880',
+      tests: '08008080880'
     }
   ]
   const openHandler = () => {
@@ -114,6 +117,7 @@ const App = () => {
     console.log('Selected user:', name, value)
   }
 
+  const defaultVa = [{ value: 'David' }]
   return (
     <>
       <PasswordInput
@@ -231,6 +235,7 @@ const App = () => {
         required={true}
         data={data}
         select='item'
+        defaultValues={defaultVa}
       />
     </>
   )
