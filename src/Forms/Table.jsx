@@ -123,14 +123,19 @@ const CustomTable = ({
       orientation: paperOrientation,
       format: paperSize
     })
-    const tableData = displayedData?.map((item) => {
-      const rowData = columns?.map((column) =>
-        getColumnValue(item, column?.field)
-      )
+
+    const tableData = displayedData.map((item) => {
+      const rowData = columns.map((column) => {
+        if (column.render) {
+          return column.render(item) // Use the render function if available
+        } else {
+          return getColumnValue(item, column.field)
+        }
+      })
       return rowData
     })
 
-    const tableHead = columns?.map((column) => column?.title)
+    const tableHead = columns.map((column) => column.title)
 
     doc.autoTable({
       head: [tableHead],
@@ -139,17 +144,28 @@ const CustomTable = ({
 
     doc.save(`${filename}.pdf`)
   }
+
   const downloadCSV = () => {
     const csvContent = `${columns
       .map((column) => column.title)
       .join(',')}\n${displayedData
       .map((item) =>
-        columns.map((column) => getColumnValue(item, column.field)).join(',')
+        columns
+          .map((column) => {
+            if (column.render) {
+              return column.render(item) // Use the render function if available
+            } else {
+              return getColumnValue(item, column.field)
+            }
+          })
+          .join(',')
       )
       .join('\n')}`
+
     const csvBlob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
     saveAs(csvBlob, `${filename}.csv`)
   }
+
   useEffect(() => {
     if (clearSelections) {
       setSelectedRows([])
